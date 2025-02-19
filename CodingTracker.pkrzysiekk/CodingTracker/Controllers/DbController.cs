@@ -16,7 +16,6 @@ namespace CodingTracker.Controllers
                 throw new ConfigurationErrorsException();
             }
             InitializeDB();
-
         }
         public void InitializeDB()
         {
@@ -28,9 +27,7 @@ namespace CodingTracker.Controllers
                 EndDate TEXT,
                 Duration INTEGER
                 );";
-
                 connection.Execute(sql);
-
             }
         }
         public void Insert(CodingSession session)
@@ -66,10 +63,6 @@ namespace CodingTracker.Controllers
                 connection.Execute(sql, session);
             }
         }
-        
-
-    
-
     public List<CodingSession> GetAllRecords()
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -78,7 +71,6 @@ namespace CodingTracker.Controllers
                 List<CodingSession> sessions = connection.Query<CodingSession>(sql).ToList();
                 return sessions;
             }
-
         }
     }
 }

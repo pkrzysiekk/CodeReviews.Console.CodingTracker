@@ -30,7 +30,6 @@ namespace CodingTracker.Controllers
                     return DateTime.TryParseExact(d, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)
                         ? ValidationResult.Success()
                         : ValidationResult.Error("[red]Invalid date format! Use dd-MM-yyyy HH:mm[/]");
-
                 })
                 );
             return DateTime.ParseExact(input, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
@@ -45,7 +44,7 @@ namespace CodingTracker.Controllers
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            AnsiConsole.Prompt(new TextPrompt<string>("[violet] Type anything to stop the session and save the elapsed time[/]"));
+            AnsiConsole.Ask<string>("[violet]Type anything to stop the session and save the time:[/]");
             sw.Stop();
             return sw.Elapsed;
         }
@@ -53,11 +52,7 @@ namespace CodingTracker.Controllers
         {
             DateTime startDate;
             DateTime endDate;
-            bool manualSession = AnsiConsole.Prompt(new TextPrompt<bool>("Do you want to start the session now and end when you're finished?")
-                .AddChoice(true)
-                .AddChoice(false)
-                .WithConverter(x=> x ? "y" : "n")
-                );
+            bool manualSession = AnsiConsole.Confirm("Do you want to start the session now and end when you're finished?");
             if (manualSession)
             {
                 startDate = DateTime.Now;
@@ -65,8 +60,6 @@ namespace CodingTracker.Controllers
             }
             else
             {
-
-
                 startDate = GetUserDate();
                 AnsiConsole.MarkupLine("[Blue] Now enter the end date [/]");
                 endDate = GetUserDate();
@@ -89,15 +82,17 @@ namespace CodingTracker.Controllers
         }
         public static int? GetUserId(List<CodingSession> list)
         {
+            if(list.Count == 0)
+            {
+                return null;
+            }
             var selectedSession=AnsiConsole.Prompt( new SelectionPrompt<CodingSession>()
                      .Title("[green]Select a session:[/]")
                      .PageSize(10)
                      .AddChoices(list)
                      .MoreChoicesText("Scroll down to see more records")
-                     .UseConverter(s => $"ID: {s.Id}, Start: {s.StartDate}:yyyy-MM-dd HH:mm, End: {s.EndDate} Duration: {s.Duration} min")
-                     
-                );
-
+                     .UseConverter(s => $"ID: {s.Id}, Start: {s.StartDate}:yyyy-MM-dd HH:mm, End: {s.EndDate} Duration: {s.Duration} min"));
+            AnsiConsole.MarkupLine($"[Blue]ID: {selectedSession.Id}, Start: {selectedSession.StartDate}:yyyy-MM-dd HH:mm, End: {selectedSession.EndDate} Duration: {selectedSession.Duration} min[/]");
             return selectedSession.Id;
         }
     }

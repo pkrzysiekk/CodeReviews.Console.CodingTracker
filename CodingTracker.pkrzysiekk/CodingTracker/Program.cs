@@ -1,5 +1,4 @@
-﻿
-using CodingTracker.Views;
+﻿using CodingTracker.Views;
 namespace CodingTracker
 {
     internal class Program
@@ -8,7 +7,6 @@ namespace CodingTracker
         {
             AppMenu appMenu = new AppMenu();
             appMenu.Show();
-
         }
     }
 }
