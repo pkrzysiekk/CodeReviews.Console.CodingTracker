@@ -31,10 +31,6 @@ namespace CodingTracker.Views
                 rowCount++;
             }
             return table;
-
         }
-
-
-
     }
 }

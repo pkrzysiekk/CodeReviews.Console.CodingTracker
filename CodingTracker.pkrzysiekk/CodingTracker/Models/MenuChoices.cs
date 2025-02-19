@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-
+﻿using System.ComponentModel.DataAnnotations;
 namespace CodingTracker.Models
 {
     public enum MenuChoices
@@ -16,6 +13,5 @@ namespace CodingTracker.Models
         EditRecord,
         [Display(Name = "Exit Menu")]
         Exit
-
     }
 }
